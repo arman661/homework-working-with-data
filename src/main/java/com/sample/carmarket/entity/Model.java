@@ -10,7 +10,8 @@ import java.util.UUID;
 
 @JmixEntity
 @Table(name = "MODEL", indexes = {
-        @Index(name = "IDX_MODEL_MANUFACTURER", columnList = "MANUFACTURER_ID")
+        @Index(name = "IDX_MODEL_MANUFACTURER", columnList = "MANUFACTURER_ID"),
+        @Index(name = "IDX_MODEL_CAR", columnList = "CAR_ID")
 })
 @Entity
 public class Model {
@@ -32,6 +33,17 @@ public class Model {
     @Column(name = "ENGINE_TYPE", nullable = false)
     @NotNull
     private String engineType;
+    @JoinColumn(name = "CAR_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Car car;
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
 
     public EngineType getEngineType() {
         return engineType == null ? null : EngineType.fromId(engineType);
